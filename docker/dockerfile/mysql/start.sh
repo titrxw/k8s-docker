@@ -15,19 +15,14 @@ service mysql start
 sleep 5
 echo `service mysql status`
 
-privileges="use mysql;
-select host, user from user;
-create user $1 identified by '"$2"';
-grant all on *.* to $1@'%' identified by '"$2"' with grant option;
-flush privileges;"
-
-echo $privileges
-
 #重新设置mysql密码
 echo '4.开始修改密码....'
-mysql < $privileges
+mysql -uroot  -e "use mysql;
+create user $1 identified by '"$2"';
+grant all privileges on *.* to $1@'%' identified by '"$2"';
+flush privileges;"
 echo '5.修改密码完毕....'
 
 #sleep 3
 echo `service mysql status`
-echo `mysql容器启动完毕`
+echo 'mysql容器启动完毕'

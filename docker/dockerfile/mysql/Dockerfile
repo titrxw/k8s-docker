@@ -15,6 +15,7 @@ RUN chmod u+x /home/start.sh
 RUN mkdir -p /var/run/mysqld && chown mysql /var/run/mysqld/
 
 # 按照shell 的方式编写entrypoint
+# 按照shell的方式执行的话，主进程为shell进程，如果shell进程内执行完后直接退出，可以加入 sleep 9999 等
 ENTRYPOINT "/home/start.sh" $DATABASE_USERNAME $DATABASE_PASSWORD
 
 EXPOSE 3306
